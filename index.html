@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#1a1510" />
+  <title>Save Ottoman</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Sans+SC:wght@400;600&family=Noto+Sans+JP:wght@400;600&family=Noto+Sans+KR:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <section id="screen-title" class="screen screen--title is-active" aria-label="Title">
+      <div class="title-atmosphere" aria-hidden="true"></div>
+      <div class="title-content">
+        <p class="title-era" data-i18n="title.era"></p>
+        <h1 class="brand">Save Ottoman</h1>
+        <p class="title-tagline" data-i18n="title.tagline"></p>
+
+        <div class="lang-gate" id="lang-gate">
+          <p class="lang-gate-label" id="lang-gate-label" data-i18n="ui.pickLang"></p>
+          <div class="lang-scroll" id="lang-scroll-title">
+            <div class="lang-grid" id="lang-grid-title" role="group" aria-label="Language"></div>
+          </div>
+          <p class="lang-gate-status" id="lang-gate-status" hidden></p>
+        </div>
+
+        <div class="title-actions">
+          <button type="button" class="btn btn--primary" id="btn-start" data-i18n="ui.start" disabled></button>
+        </div>
+
+        <div class="iap-card" id="iap-card-title">
+          <div class="iap-card-text">
+            <p class="iap-title" data-i18n="iap.adfree.title"></p>
+            <p class="iap-price" id="iap-price-title" data-i18n="iap.adfree.price"></p>
+            <p class="iap-note" data-i18n="iap.adfree.note"></p>
+          </div>
+          <button type="button" class="btn btn--iap" id="btn-iap-title" data-i18n="iap.adfree.buy"></button>
+        </div>
+
+        <p class="title-note" data-i18n="title.note"></p>
+      </div>
+    </section>
+
+    <section id="screen-play" class="screen screen--play" hidden aria-label="Story">
+      <header class="play-top">
+        <div class="brand-mini">Save Ottoman</div>
+        <div class="play-top-actions">
+          <button type="button" class="btn btn--tiny" id="btn-hint" hidden></button>
+          <button type="button" class="btn btn--tiny" id="btn-pause" data-i18n="ui.pause"></button>
+          <button type="button" class="btn btn--tiny" id="btn-lang-play"></button>
+        </div>
+      </header>
+
+      <div class="meters" id="meters" aria-label="Status">
+        <div class="meter" data-meter="mustafaFavor">
+          <span class="meter-label" data-i18n="meter.mustafaFavor"></span>
+          <div class="meter-track"><div class="meter-fill" id="fill-mustafaFavor"></div></div>
+        </div>
+        <div class="meter" data-meter="courtSuspicion">
+          <span class="meter-label" data-i18n="meter.courtSuspicion"></span>
+          <div class="meter-track"><div class="meter-fill meter-fill--danger" id="fill-courtSuspicion"></div></div>
+        </div>
+        <div class="meter" data-meter="janissaryLoyalty">
+          <span class="meter-label" data-i18n="meter.janissaryLoyalty"></span>
+          <div class="meter-track"><div class="meter-fill" id="fill-janissaryLoyalty"></div></div>
+        </div>
+      </div>
+
+      <div class="goal-bar" id="goal-bar" aria-live="polite">
+        <span class="goal-label" data-i18n="ui.goal"></span>
+        <span class="goal-text" id="goal-text"></span>
+      </div>
+
+      <div class="chapter-chip" id="chapter-chip"></div>
+
+      <article class="scene" id="scene">
+        <figure class="scene-still" id="scene-still" hidden>
+          <img id="scene-still-img" alt="" />
+        </figure>
+        <h2 class="scene-title" id="scene-title"></h2>
+        <div class="scene-body" id="scene-body"></div>
+        <aside class="hint-panel" id="hint-panel" hidden></aside>
+      </article>
+
+      <div class="choices" id="choices" role="group" aria-label="Choices"></div>
+    </section>
+
+    <section id="screen-end" class="screen screen--end" hidden aria-label="Ending">
+      <div class="end-card">
+        <p class="end-kicker" id="end-kicker"></p>
+        <h2 class="end-title" id="end-title"></h2>
+        <p class="end-body" id="end-body"></p>
+        <div class="end-actions" id="end-actions"></div>
+      </div>
+    </section>
+
+    <div id="lang-modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="lang-modal-title">
+      <div class="modal-backdrop" id="lang-modal-backdrop"></div>
+      <div class="modal-panel">
+        <p class="modal-kicker" data-i18n="ui.lang"></p>
+        <h2 id="lang-modal-title" class="modal-title" data-i18n="ui.pickLang"></h2>
+        <div class="lang-scroll lang-scroll--modal" id="lang-scroll-modal">
+          <div class="lang-grid lang-grid--modal" id="lang-grid-modal" role="group"></div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn--ghost" id="btn-lang-close" data-i18n="ui.continue"></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="pause-modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="pause-modal-title">
+      <div class="modal-backdrop" id="pause-modal-backdrop"></div>
+      <div class="modal-panel">
+        <p class="modal-kicker" data-i18n="ui.pause"></p>
+        <h2 id="pause-modal-title" class="modal-title" data-i18n="ui.pause"></h2>
+        <div class="iap-card iap-card--modal" id="iap-card-pause">
+          <div class="iap-card-text">
+            <p class="iap-title" data-i18n="iap.adfree.title"></p>
+            <p class="iap-price" id="iap-price-pause" data-i18n="iap.adfree.price"></p>
+            <p class="iap-note" data-i18n="iap.adfree.note"></p>
+          </div>
+          <button type="button" class="btn btn--iap" id="btn-iap-pause" data-i18n="iap.adfree.buy"></button>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn--primary" id="btn-resume" data-i18n="ui.resume"></button>
+          <button type="button" class="btn btn--ghost" id="btn-restart-pause" data-i18n="ui.restart"></button>
+          <button type="button" class="btn btn--ghost" id="btn-pause-lang" data-i18n="ui.lang"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ad-modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="ad-title">
+    <div class="modal-backdrop"></div>
+    <div class="modal-panel">
+      <p class="modal-kicker" id="ad-kicker" data-i18n="ad.kicker"></p>
+      <h2 id="ad-title" class="modal-title" data-i18n="ad.title"></h2>
+      <p class="modal-body" id="ad-body" data-i18n="ad.body"></p>
+      <div class="ad-sim" id="ad-sim" hidden>
+        <div class="ad-sim-bar"><div class="ad-sim-fill" id="ad-sim-fill"></div></div>
+        <p class="ad-sim-label" id="ad-sim-label"></p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn--primary" id="btn-watch-ad" data-i18n="ad.watch"></button>
+        <button type="button" class="btn btn--ghost" id="btn-give-up" data-i18n="ad.giveUp"></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/strings.js"></script>
+  <script src="js/story.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
